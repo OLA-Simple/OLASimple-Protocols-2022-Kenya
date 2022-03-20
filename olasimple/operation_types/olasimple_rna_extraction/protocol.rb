@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Updated version: March 16, 2022
+# Updated version: March 20, 2022
 needs 'OLASimple/OLAConstants'
 needs 'OLASimple/OLALib'
 needs 'OLASimple/OLAGraphics'
@@ -229,7 +229,7 @@ class Protocol
   def kit_image
     grid = SVGGrid.new(PER_SAMPLE_COMPONENTS.size + SHARED_COMPONENTS.size + 1, operations.size, 80, 100)
     initial_kit_components = {
-      DTT => :E0_closed_dry,
+      DTT => :E6_closed, #changed from E0_closed_dry to remove bead
       LYSIS_BUFFER => :E1_closed,
       SA_WATER => :E4_closed,
       WASH1 => :E2_closed,
@@ -374,7 +374,6 @@ class Protocol
       note "Let <b>#{samples.to_sentence}</b> incubate for <b>#{time}</b> at room temperature."
       check "Set a timer for <b>#{time}</b>"
       note 'Do not proceed until time has elapsed.'
-      note '<iframe width="560" height="315" src="https://www.youtube.com/embed/zdl52lDRH1U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' 
     end
   end
 
