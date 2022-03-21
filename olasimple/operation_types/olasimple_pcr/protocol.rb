@@ -366,28 +366,10 @@ class Protocol
     
     t = Table.new
     # temps and times for first 3 cycles
-    cycles_temp_initial = "<table style=\"width:100%\">
-                    <tr><td>94C</td></tr>
-                    <tr><td>57C</td></tr>
-                    <tr><td>68C</td></tr>
-      </table>"
-    cycles_time_initial = "<table style=\"width:100%\">
-                           <tr><td>15 sec</td></tr>
-                           <tr><td>30 sec</td></tr>
-                           <tr><td>20 sec</td></tr>
-      </table>"
-    # temps and times for 42 cycles
-    cycles_temp = "<table style=\"width:100%\">
-                    <tr><td>94C</td></tr>
-                    <tr><td>68C</td></tr>
-      </table>"
-    cycles_time = "<table style=\"width:100%\">
-                           <tr><td>10 sec</td></tr>
-                           <tr><td>20 sec</td></tr>
-      </table>"
-    t.add_column('STEP', ['Initial Melt', '3 cycles of', '42 cycles of', 'Extension', 'Hold'])
-    t.add_column('TEMP', ['94C', cycles_temp_initial, cycles_temp, '68C', '4C'])
-    t.add_column('TIME', ['2 min', cycles_time_initial, cycles_time, '4 min', 'forever'])
+    t.add_column('STEP', ['Initial Denaturation', 'Denaturation', 'Annealing', 'Extension', 'Denaturation', 'Annealing/Extension', 'Final Extension', 'Hold'])
+    t.add_column('TEMP', ['94C', '94C', '57C', '68C', '94C', '68C', '68C', '4C'])
+    t.add_column('TIME', ['2 min', '15 seconds', '30 seconds', '20 seconds', '10 seconds', '20 seconds', '4 min', 'indefinite'])
+    t.add_column('CYCLES', ['1 cycle', '3 cycles', '', '', '42 cycles', '', '1 cycle', '1 cycle'])
 
     show do
       title 'Run PCR'
