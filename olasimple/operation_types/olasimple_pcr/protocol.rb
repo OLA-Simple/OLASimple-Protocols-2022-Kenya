@@ -6,7 +6,7 @@
 # OLASimple PCR
 # author: Justin Vrana
 # date: March 2018
-# updated version: March 16, 2022
+# updated version: March 20, 2022
 #
 ##########################################
 
