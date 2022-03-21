@@ -365,11 +365,44 @@ class Protocol
                                  'to mix.', 'to pull down liquid', AREA, mynote = nil, vortex_type = "Pulse")
     
     t = Table.new
+    #
+    initial_steps =  "<table style=\"width:100%\">
+                   <tr><td>Denaturation</td></tr>
+                   <tr><td>Annealing</td></tr>
+                   <tr><td>Extension</td></tr>
+                    </table>"
+
+    steps = "<table style=\"width:100%\">
+             <tr><td>Denaturation</td></tr>
+             <tr><td>Annealing/Extension</td></tr>
+            </table>"
+
+    initial_temps =  "<table style=\"width:100%\">
+                   <tr><td>94C</td></tr>
+                   <tr><td>57C</td></tr>
+                   <tr><td>68C</td></tr>
+                    </table>"
+
+    temps =  "<table style=\"width:100%\">
+                   <tr><td>94C</td></tr>
+                   <tr><td>68C</td></tr>
+                    </table>"
+
+    initial_times =  "<table style=\"width:100%\">
+                   <tr><td>15 seconds</td></tr>
+                   <tr><td>30 seconds</td></tr>
+                   <tr><td>20 seconds</td></tr>
+                    </table>"
+
+    times =  "<table style=\"width:100%\">
+                   <tr><td>10 seconds</td></tr>
+                   <tr><td>20 seconds</td></tr>
+                    </table>"
     # temps and times for first 3 cycles
-    t.add_column('STEP', ['Initial Denaturation', 'Denaturation', 'Annealing', 'Extension', 'Denaturation', 'Annealing/Extension', 'Final Extension', 'Hold'])
-    t.add_column('TEMP', ['94C', '94C', '57C', '68C', '94C', '68C', '68C', '4C'])
-    t.add_column('TIME', ['2 min', '15 seconds', '30 seconds', '20 seconds', '10 seconds', '20 seconds', '4 min', 'indefinite'])
-    t.add_column('CYCLES', ['1 cycle', '3 cycles', '', '', '42 cycles', '', '1 cycle', '1 cycle'])
+    t.add_column('STEP', ['Initial Denaturation', initial_steps, steps, 'Final Extension', 'Hold'])
+    t.add_column('TEMP', ['94C', initial_temps, temps, '68C', '4C'])
+    t.add_column('TIME', ['2 min', initial_times, times, '4 min', 'indefinite'])
+    t.add_column('CYCLES', ['1 cycle', '3 cycles', '42 cycles', '1 cycle', '1 cycle'])
 
     show do
       title 'Run PCR'
