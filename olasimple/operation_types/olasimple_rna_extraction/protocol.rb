@@ -580,7 +580,7 @@ class Protocol
       columns = operations.map { |op| column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
       note display_elution_addition
       columns.each do |column|
-        check "Add <b>60uL</b> from <b>#{SA_WATER}</b> to column <b>#{column}</b>"
+        check "Add <b>50uL</b> from <b>#{SA_WATER}</b> to column <b>#{column}</b>"
       end
       check 'Close lid on column tightly.'
     end
