@@ -128,7 +128,7 @@ class Protocol
         gops = group_packages(myops)
         show do
             title "Place #{SAMPLE_ALIAS.bold} samples in #{AREA.bold} area."
-            note "In #{AREA.bold} area, retrieve tubes from thermocycler and place into a rack."
+            note "Retrieve extracted RNA samples (E6) place them on the rack."
             tubes = []
             gops.each do |unit, ops|
                 ops.each_with_index do |op, i|
