@@ -327,8 +327,8 @@ class Protocol
         check "Ensure tube caps are tightly shut for #{to.to_sentence}."
         check "Vortex <b>#{to.to_sentence}</b> for <b>2 seconds, twice</b>." unless skip_vortex
         check "Centrifuge <b>#{to.to_sentence}</b> for <b>5 seconds</b>." unless skip_centrifuge
-        check vortex_note if vortex_note
-        check centrifuge_note if centrifuge_note
+        check vortex_note
+        check centrifuge_note
       end
     else # SINGLE TRANSFER
       from_component, from_sample_num = from.split('-')
@@ -353,6 +353,8 @@ class Protocol
         check "Ensure tube cap is tightly shut for #{to}."
         check "Vortex <b>#{to}</b> for <b>2 seconds, twice</b>." unless skip_vortex
         check "Centrifuge <b>#{to}</b> for <b>5 seconds</b>." unless skip_centrifuge
+        check vortex_note
+        check centrifuge_note
       end
     end
   end
@@ -403,7 +405,7 @@ class Protocol
 
   def prepare_lysis_buffers
     show do
-      title "Centrifuge #{DTT} and #{SA_WATER}" # E0 and E4
+      title "Centrifuge the following:" # E0 and E4
       check "Centrifuge <b>#{DTT}</b> and <b>#{SA_WATER}</b> for <b>5 seconds</b>."
       check "Centrifuge <b>E1-001</b> and <b>E1-002</b> for 5 seconds"
       check "Centrifuge <b>#{WASH2}</b> and <b>#{SA_WATER}</b> for <b>5 seconds</b>." #E3 and E4
