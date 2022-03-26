@@ -297,7 +297,7 @@ class Protocol
   end
 
   # helper method for simple transfers in this protocol
-  def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_svg: nil, from_svg: nil, skip_centrifuge: false, extra_check: nil)
+  def transfer_and_vortex(title, from, to, volume_ul, warning: nil, to_svg: nil, from_svg: nil, skip_vortex: false, skip_centrifuge: false, extra_check: nil, vortex_note: nil, centrifuge_note: nil)
 
     pipette, extra_note, setting_instruction = pipette_decision(volume_ul)
    # pipette, extra_note, setting_instruction = "P20", nil, "Set P20 pipette to [0 5 6]"  
@@ -325,8 +325,10 @@ class Protocol
         warning warning if warning
         note display_svg(img, 0.75) if img
         check "Ensure tube caps are tightly shut for #{to.to_sentence}."
-        check "Vortex <b>#{to.to_sentence}</b> for <b>2 seconds, twice</b>."
+        check "Vortex <b>#{to.to_sentence}</b> for <b>2 seconds, twice</b>." unless skip_vortex
         check "Centrifuge <b>#{to.to_sentence}</b> for <b>5 seconds</b>." unless skip_centrifuge
+        check vortex_note if vortex_note
+        check centrifuge_note if centrifuge_note
       end
     else # SINGLE TRANSFER
       from_component, from_sample_num = from.split('-')
@@ -349,7 +351,7 @@ class Protocol
         check "Discard pipette tip into #{WASTE_PRE}."
         check extra_check if extra_check
         check "Ensure tube cap is tightly shut for #{to}."
-        check "Vortex <b>#{to}</b> for <b>2 seconds, twice</b>."
+        check "Vortex <b>#{to}</b> for <b>2 seconds, twice</b>." unless skip_vortex
         check "Centrifuge <b>#{to}</b> for <b>5 seconds</b>." unless skip_centrifuge
       end
     end
@@ -403,14 +405,12 @@ class Protocol
     show do
       title "Centrifuge #{DTT} and #{SA_WATER}" # E0 and E4
       check "Centrifuge <b>#{DTT}</b> and <b>#{SA_WATER}</b> for <b>5 seconds</b>."
+      check "Centrifuge <b>E1-001</b> and <b>E1-002</b> for 5 seconds"
+      check "Centrifuge <b>#{WASH2}</b> and <b>#{SA_WATER}</b> for <b>5 seconds</b>." #E3 and E4
     end
 
     lysis_buffers = operations.map { |op| "#{LYSIS_BUFFER}-#{op.temporary[:output_sample]}" }
  
-    show do
-      note 'Carrier RNA REHYDRATION STEP IS TO BE DONE BY TEAM PRIOR TO HAVING TECHS START'
-    end 
-
     transfer_and_vortex(
       "Prepare Lysis Buffers #{lysis_buffers.to_sentence}",
       DTT, #E0
@@ -425,21 +425,27 @@ class Protocol
    def prepare_wash_buffers
 #   prepare wash buffer 2 with ethanol
       transfer_and_vortex(
-        "Prepare Buffers #{WASH1} and #{WASH2}",
+        "Prepare Buffers #{WASH1} and #{WASH2}", # E2 and E3
         ETHANOL,
-        WASH1,
+        WASH1, # E2
         680,
         from_svg: :ethanol_container_open,
-        to_svg: :E3_open
+        to_svg: :E3_open,
+        skip_vortex: true,
+        skip_centrifuge: true
       )
     
       transfer_and_vortex(
-        "Prepare #{WASH2}",
+        "Prepare #{WASH2}", # E3
         ETHANOL,
         WASH2,
         840,
         from_svg: :ethanol_container_open,
-        to_svg: :E3_open
+        to_svg: :E3_open,
+        skip_vortex: true,
+        skip_centrifuge: true,
+        vortex_note: "Vortex <b>#{WASH1}</b> and <b>#{WASH2}</b> for 2 seconds, twice",
+        centrifuge_note: "Centrifuge <b>#{WASH1}</b> and <b>#{WASH2}</b> for 5 seconds"
       )
   end
 
