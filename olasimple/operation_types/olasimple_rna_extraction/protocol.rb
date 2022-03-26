@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Updated version: March 20, 2022
+# Updated version: March 23, 2022
 needs 'OLASimple/OLAConstants'
 needs 'OLASimple/OLALib'
 needs 'OLASimple/OLAGraphics'
@@ -92,11 +92,12 @@ class Protocol
     add_wash_2
     centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}", speed: 14000)
 
-    transfer_column_to_e6
-    elute
-
-    change_collection_tubes # Added March 22
-    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH')
+    change_collection_tubes # Added March 22 (55)
+    
+    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH', speed: 14000)
+    
+    transfer_column_to_e6 # 53
+    elute # 54
 
     incubate(sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }, '1 minute')
 
@@ -176,7 +177,7 @@ class Protocol
 
     show do
       title 'Required Reagent (not provided)'
-      check 'Before starting this protocol, make sure you have access to molecular grade ethanol (~10 mL, 200 proof).'
+      check 'Before starting this protocol, make sure you have access to molecular grade ethanol (5 mL, 200 proof).'
       note 'Do not use other grades of ethanol as this will negatively affect the RNA extraction yield.'
       note 'Soon, using a serological pipette, you will transfer 4ml of the molecular grade ethanol to the provided ethanol container in the kit.'
       note display_ethanol_question_svg
@@ -200,7 +201,7 @@ class Protocol
         'P1000 pipette and filter tips',
         'P200 pipette and filter tips',
         'P20 pipette and filter tips',
-        'gloves',
+        'Gloves',
         'Pipette controller and 10mL serological pipette',
         'Vortex mixer',
         'Centrifuge',
@@ -357,13 +358,13 @@ class Protocol
   def pipette_decision(volume_ul)
     if volume_ul <= 20
       setting = '[ ' + (volume_ul * 10).round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
-      [P20_PRE, nil, "Set P20 pipette to <b>#{setting}</b>"]
+      [P20_PRE, nil, "Set P20 pipette to <b>#{volume_ul} uL</b>"]
     elsif volume_ul <= 200
       setting = '[ ' + volume_ul.round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
-      [P200_PRE, nil, "Set p200 pipette to <b>#{setting}</b>"]
+      [P200_PRE, nil, "Set p200 pipette to <b>#{volume_ul} uL</b>"]
     elsif volume_ul <= 1000
       setting = '[ ' + (volume_ul / 10).round.to_s.rjust(3, '0').split('').join(' ') + ' ]'
-      [P1000_PRE, nil, "Set p1000 pipette to <b>#{setting}</b>"]
+      [P1000_PRE, nil, "Set p1000 pipette to <b>#{volume_ul} uL</b>"]
     else
       factor = volume_ul.fdiv(1000).ceil
       split_volume = volume_ul.fdiv(factor)
