@@ -90,18 +90,18 @@ class Protocol
     change_collection_tubes
 
     add_wash_2
-    centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}", speed: 14000)
+    centrifuge_columns(flow_instructions: "Discard flow through into #{GuSCN_WASTE}", speed: "at least 13000")
 
-    change_collection_tubes # Added March 22 (55)
-    
-    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH', speed: 14000)
-    
+    2.times do
+      change_collection_tubes # Added March 22 (55)
+      centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH', speed: 14000)
+    end
     transfer_column_to_e6 # 53
     elute # 54
 
     incubate(sample_labels.map { |s| "#{SAMPLE_COLUMN}-#{s}" }, '1 minute')
 
-    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH')
+    centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH', speed: "at least 13000")
 
     finish_up
     disinfect
@@ -380,7 +380,7 @@ class Protocol
   # helper method for simple incubations
   def incubate(samples, time)
     show do
-      title 'Incubate Sample Lysis Solutions'
+      title 'Incubate E6 Tubes to ensure full RNA recovery.'
       note "Let <b>#{samples.to_sentence}</b> incubate for <b>#{time}</b> at room temperature."
       check "Set a timer for <b>#{time}</b>"
       note 'Do not proceed until time has elapsed.'
@@ -517,14 +517,14 @@ class Protocol
     end
   end
 
-  def add_wash_1
+  def add_wash_1 #E2
     columns = operations.map { |op| column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
-    transfer_carefully(WASH1, columns, 500, from_type: 'Wash Buffer', to_type: 'column', from_svg: :E2_open, to_svg: :E5_full_open_w_empty_collector)
+    transfer_carefully(WASH1, columns, 500, from_type: 'Wash Buffer E2', to_type: 'column', from_svg: :E2_open, to_svg: :E5_full_open_w_empty_collector)
   end
 
-  def add_wash_2
+  def add_wash_2 #E3
     columns = operations.map { |op| column = "#{SAMPLE_COLUMN}-#{op.temporary[:output_sample]}" }
-    transfer_carefully(WASH2, columns, 500, from_type: 'Wash Buffer', to_type: 'column', from_svg: :E3_open, to_svg: :E5_full_open_w_empty_collector)
+    transfer_carefully(WASH2, columns, 500, from_type: 'Wash Buffer E3', to_type: 'column', from_svg: :E3_open, to_svg: :E5_full_open_w_empty_collector)
   end
 
   def transfer_carefully(from, to, volume_ul, from_type:, to_type:, from_svg: nil, to_svg: nil)
@@ -575,7 +575,7 @@ class Protocol
 
   def transfer_column_to_e6
     show do
-      title 'Transfer Columns'
+      title 'Transfer E5 Columns to E6 Clean Tubes'
       warning 'Make sure the bottom of the E5 columns did not touch any fluid from the previous collection tubes. When in doubt, centrifuge the tube for 1 more minute.'
       note display_pre_elution_warning
       operations.each do |op|
@@ -619,7 +619,7 @@ class Protocol
       title 'Store Items'
       extract_tubes = sample_labels.map { |s| "#{RNA_EXTRACT}-#{s}" }
       note "Store <b>#{extract_tubes.to_sentence}</b> in the fridge on a cold rack if the amplification module will proceed immediately."
-      note "Store <b>#{extract_tubes.to_sentence}</b> in -20C freezer if proceeding with the amplification module later."
+      note "Store <b>#{extract_tubes.to_sentence}</b> in -80C freezer if proceeding with the amplification module later."
     end
   end
 
