@@ -59,7 +59,7 @@ class Protocol
     'A spray bottle of 10% v/v bleach',
     'A spray bottle of 70% v/v ethanol',
     'Balancing tube (on rack)',
-    'Centrifuge',
+    'Mini-Centrifuge',
     'Vortex mixer'
   ].freeze
   COMPONENTS = PACK_HASH['Components']['sample tubes']
@@ -424,10 +424,10 @@ class Protocol
                         <tr><td>4 min</td></tr>
           </table>"
     # t.add_column("STEP", ["Initial Melt", "10 cycles of", "Hold"])
-    t.add_column('STEP', [cycles_steps])
-    t.add_column('TEMP', [cycles_temp])
-    t.add_column('TIME', [cycles_time])
-    t.add_column('Cycles', ['10 Cycles'])
+    t.add_column('STEP', [cycles_steps, 'Hold'] )
+    t.add_column('TEMP', [cycles_temp, '4C'])
+    t.add_column('TIME', [cycles_time, 'Infinity'])
+    t.add_column('Cycles', ['10 Cycles', ''])
 
     t
   end
