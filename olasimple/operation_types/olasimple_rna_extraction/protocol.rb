@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Updated version: March 23, 2022
+# Updated version: March 26, 2022
 needs 'OLASimple/OLAConstants'
 needs 'OLASimple/OLALib'
 needs 'OLASimple/OLAGraphics'
@@ -96,6 +96,7 @@ class Protocol
       change_collection_tubes # Added March 22 (55)
       centrifuge_columns(flow_instructions: '<b>DO NOT DISCARD FLOW THROUGH</b>', extra_warning: 'DO NOT DISCARD FLOW THROUGH', speed: 14000)
     end
+
     transfer_column_to_e6 # 53
     elute # 54
 
