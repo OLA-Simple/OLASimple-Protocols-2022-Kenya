@@ -6,7 +6,7 @@
 # OLASimple PCR
 # author: Justin Vrana
 # date: March 2018
-# updated version: March 20, 2022
+# updated version: March 28, 2022
 #
 ##########################################
 
@@ -246,6 +246,7 @@ class Protocol
 
         check "Look for #{num_samples + 1} #{'tube'.pluralize(num_samples)}"
         check 'Place tubes on a rack'
+        check "Label 'A2001' and 'A2002' on side and lid of corresponding tubes." 
         note display_svg(img, 0.75)
       end
     end
