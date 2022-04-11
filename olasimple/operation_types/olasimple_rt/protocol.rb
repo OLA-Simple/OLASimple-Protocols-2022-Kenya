@@ -175,28 +175,6 @@ class Protocol
       end #grouped by unit
     end #method
     
-        # rt_tube_labels = ops.map { |op| op.output_tube_label(OUTPUT) }
-        # num_samples = ops.first.temporary[:pack_hash][NUM_SAMPLES_FIELD_VALUE]
-        # kit, unit, component, sample = ops.first.output_tokens(OUTPUT)
-
-        # grid = SVGGrid.new(num_samples, 1, 75, 10)
-        # rt_tube_labels.each_with_index do |tube_label, i|
-        #   # powder is saying how to describe what's in the tube
-        #   rt_tube = make_tube(closedtube, '', tube_label, 'powder', true).scale(0.75)
-        #   grid.add(rt_tube, i, 0)
-        # end #end each with index
-
-        # grid.boundy = closedtube.boundy * 0.75
-        # grid.align_with(diluentATube, 'center-right')
-        # grid.align!('center-left')
-        # grid.translate!(25, 25)
-        # img = SVGElement.new(children: [diluentATube, grid], boundy: diluentATube.boundy + 50, boundx: 300).translate!(20)
-
-        # check "Look for #{num_samples + 1} #{'tube'.pluralize(num_samples)}"
-        # check 'Place tubes on a rack'
-        # note display_svg(img, 0.75)
-
-
     def centrifuge_samples(ops)
         #labels = ops.map { |op| ref(op.output(OUTPUT).item) }
         show do
