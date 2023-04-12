@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Library code here
+# category = "Tissue Culture Libs"
+# needs "#{category}/TissueCulture"
 needs 'OLASimple/OLAConstants'
 needs 'OLASimple/OLAGraphics'
 needs 'OLASimple/NetworkRequests'
@@ -610,7 +613,7 @@ module OLALib
     end
   end
 
-  def add_to_thermocycler(sample_identifier, sample_labels, program_name, program_table, name, note = nil)
+  def add_to_thermocycler(sample_identifier, sample_labels, program_name, program_table, name)
     len = if sample_labels.is_a?(Array)
             sample_labels.length
           else
@@ -622,7 +625,7 @@ module OLALib
       check "Add #{pluralizer(sample_identifier, len)} to #{THERMOCYCLER}"
       check 'Close and tighten the lid.'
       check "Select the program named #{program_name.bold} under the <b>OS</b>"
-      check "Hit <b>'Run'</b> and click <b>'OK'</b> #{note}"
+      check 'Hit <b>"Run"</b> and click <b>"OK"</b>'
       table program_table
     end
   end
@@ -685,7 +688,7 @@ module OLALib
       note '<b>PPE is required</b>'
       note display_svg(img2, 0.2)
       check 'Put on lab coat.'
-      check "Put on #{(area && area == PRE_PCR) ? '2 layers of ' : ''}gloves."
+      check "Put on #{(area && area == PRE_PCR) ? 'layers of ' : ''}gloves."
       bullet 'Make sure to use tight gloves. Tight gloves reduce the chance of the gloves getting caught on the tubes when closing their lids.'
       bullet 'Change gloves after touching any common space surface to reduce contamination (such as a refrigerator door handle).'
       if area && area == PRE_PCR
@@ -797,4 +800,3 @@ module OLALib
     ShowBlock.new(self).run(&p)
 end
 end
-
